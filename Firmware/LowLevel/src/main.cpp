@@ -194,8 +194,8 @@ void updateEmergency() {
         tilt_emergency_started = 0;
     }
 
-    if ((LIFT_EMERGENCY_MILLIS > 0 && lift_emergency_started > 0 && (millis() - lift_emergency_started) >= LIFT_EMERGENCY_MILLIS) ||
-        (TILT_EMERGENCY_MILLIS > 0 && tilt_emergency_started > 0 && (millis() - tilt_emergency_started) >= TILT_EMERGENCY_MILLIS)) {
+    if ((llhl_config.lift_period > 0 && lift_emergency_started > 0 && (millis() - lift_emergency_started) >= llhl_config.lift_period) ||
+        (llhl_config.tilt_period > 0 && tilt_emergency_started > 0 && (millis() - tilt_emergency_started) >= llhl_config.tilt_period)) {
         emergency_state |= (emergency_read & LL_EMERGENCY_BITS_LIFT);
     }
 
@@ -229,7 +229,7 @@ void manageUILEDS() {
         setLed(leds_message, LED_CHARGING, LED_off);
 
     // Show Info Battery state
-    if (status_message.v_battery >= (BATT_EMPTY + 2.0f))
+    if (status_message.v_battery >= (llhl_config.v_battery_empty + 2.0f))
         setLed(leds_message, LED_BATTERY_LOW, LED_off);
     else
         setLed(leds_message, LED_BATTERY_LOW, LED_on);
@@ -715,8 +715,8 @@ void loop() {
         status_message.status_bitmask = (status_message.status_bitmask & 0b11011111) | ((sound_available & 0b1) << 5);
 
         // calculate percent value accu filling
-        float delta = BATT_FULL - BATT_EMPTY;
-        float vo = status_message.v_battery - BATT_EMPTY;
+        float delta = llhl_config.v_battery_full - llhl_config.v_battery_empty;
+        float vo = status_message.v_battery - llhl_config.v_battery_empty;
         status_message.batt_percentage = vo / delta * 100;
         if (status_message.batt_percentage > 100)
             status_message.batt_percentage = 100;
