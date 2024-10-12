@@ -172,17 +172,17 @@ struct ll_high_level_config {
 
     // uint8_t type; Just for illustration. Get set in wire buffer with type PACKET_ID_LL_HIGH_LEVEL_CONFIG_REQ or PACKET_ID_LL_HIGH_LEVEL_CONFIG_RSP
 
-    uint8_t config_bitmask = 0;                    // See LL_HIGH_LEVEL_CONFIG_BIT_*
-    uint16_t rain_threshold = RAIN_THRESHOLD;      // If (stock CoverUI) rain value < rain_threshold then it rains. Expected to differ between C500, SA and SC types
-    float v_charge_cutoff = V_CHARGE_MAX;          // Protective max. charging voltage before charging get switched off
-    float i_charge_cutoff = I_CHARGE_MAX;          // Protective max. charging current before charging get switched off
-    float v_battery_cutoff = V_BATT_CUTOFF;          // Protective max. battery voltage before charging get switched off
-    float v_battery_empty = BATT_EMPTY;            // Empty battery voltage used for % calc of capacity
-    float v_battery_full = BATT_FULL;              // Full battery voltage used for % calc of capacity
-    uint16_t lift_period = LIFT_EMERGENCY_MILLIS;  // Period (ms) for both wheels to be lifted in order to count as emergency (0 disable, 0xFFFF do not change). This is to filter uneven ground
-    uint16_t tilt_period = TILT_EMERGENCY_MILLIS;  // Period (ms) for a single wheel to be lifted in order to count as emergency (0 disable, 0xFFFF do not change). This is to filter uneven ground
-    iso639_1 language = {LANGUAGE};                // ISO 639-1 (2-char) language code (en, de, ...)
-    int8_t volume = SOUND_VOLUME;                  // Volume (0-100%) feedback (if directly changed i.e. via CoverUI or WebApp)
+    uint8_t config_bitmask = 0;            // See LL_HIGH_LEVEL_CONFIG_BIT_*
+    uint16_t rain_threshold = 700;         // If (stock CoverUI) rain value < rain_threshold then it rains. Expected to differ between C500, SA and SC types
+    float v_charge_cutoff = 30.0f;         // Protective max. charging voltage before charging get switched off
+    float i_charge_cutoff = 1.5f;          // Protective max. charging current before charging get switched off
+    float v_battery_cutoff = 29.0f;        // Protective max. battery voltage before charging get switched off
+    float v_battery_empty = 21.7f + 0.3f;  // Empty battery voltage used for % calc of capacity
+    float v_battery_full = 28.7f - 0.3f;   // Full battery voltage used for % calc of capacity
+    uint16_t lift_period = 100;            // Period (ms) for both wheels to be lifted in order to count as emergency (0 disable, 0xFFFF do not change). This is to filter uneven ground
+    uint16_t tilt_period = 2500;           // Period (ms) for a single wheel to be lifted in order to count as emergency (0 disable, 0xFFFF do not change). This is to filter uneven ground
+    iso639_1 language = {'e', 'n'};        // ISO 639-1 (2-char) language code (en, de, ...)
+    int8_t volume = 80;                    // Volume (0-100%) feedback (if directly changed i.e. via CoverUI or WebApp)
     HallConfig hall_configs[MAX_HALL_INPUTS] = {
         {HallMode::EMERGENCY, HallLevel::ACTIVE_LOW},  // [0] OM Hall-1 input (Lift1)
         {HallMode::EMERGENCY, HallLevel::ACTIVE_LOW},  // [1] OM Hall-2 input (Lift2)
