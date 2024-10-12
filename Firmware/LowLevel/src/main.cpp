@@ -19,7 +19,6 @@
 #include <FastCRC.h>
 #include <PacketSerial.h>
 #include "datatypes.h"
-#include "config_defaults.h"
 #include "pins.h"
 #include "ui_board.h"
 #include "imu.h"
@@ -571,8 +570,8 @@ void applyConfig(const uint8_t *buffer, size_t size) {
     memcpy(&tmp_config, buffer, payload_size);
 
     // Sanity
-    tmp_config.v_charge_cutoff = min(tmp_config.v_charge_cutoff, V_CHARGE_ABS_MAX);  // Fix exceed of hardware limits
-    tmp_config.i_charge_cutoff = min(tmp_config.i_charge_cutoff, I_CHARGE_ABS_MAX);  // Fix exceed of hardware limits
+    tmp_config.v_charge_cutoff = min(tmp_config.v_charge_cutoff, 40.0f);  // Absolute max. limited by D2/D3 Schottky
+    tmp_config.i_charge_cutoff = min(tmp_config.i_charge_cutoff, 5.0f);   // Absolute max. limited by D2/D3 Schottky
 
     // Make config live
     llhl_config = tmp_config;

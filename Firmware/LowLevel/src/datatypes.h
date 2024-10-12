@@ -19,7 +19,6 @@
 #define _DATATYPES_H
 
 #include <stdint.h>
-#include "config_defaults.h"
 
 #define PACKET_ID_LL_STATUS 1
 #define PACKET_ID_LL_IMU 2
